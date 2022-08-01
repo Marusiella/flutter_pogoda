@@ -37,7 +37,8 @@ class _DataBlueState extends State<DataBlue> {
                       width: mediaQ.size.width * 0.75,
                       frameRate: FrameRate(kDebugMode ? 1 : 30),
                       animate: animation,
-                      "assets/animated_icons/50651-cloudy.json"),
+                      getWeatherLottie(
+                          Provider.of<WeatherProvider>(context).weather)),
                   onVisibilityChanged: (v) {
                     setState(() {
                       animation = v.visibleFraction > 0.5;

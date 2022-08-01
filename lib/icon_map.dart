@@ -1,3 +1,5 @@
+import 'package:weather/weather.dart';
+
 const weatherCodes = {
   "01d": "clear sky day",
   "01n": "clear sky night",
@@ -38,6 +40,33 @@ const weatherImages = {
   "50d": "assets/svgs/water-solid.svg",
   "50n": "assets/svgs/water-solid.svg",
 };
+
+const weatherLottie = {
+  "01d": "assets/animated_icons/4804-weather-sunny.json",
+  "01n": "assets/animated_icons/4799-weather-night.json",
+  "02d": "assets/animated_icons/4800-weather-partly-cloudy.json",
+  "02n": "assets/animated_icons/4796-weather-cloudynight.json",
+  "03d": "assets/animated_icons/4806-weather-windy.json",
+  "03n": "assets/animated_icons/4806-weather-windy.json",
+  "04d": "assets/animated_icons/4806-weather-windy.json",
+  "04n": "assets/animated_icons/4806-weather-windy.json",
+  "09d": "assets/animated_icons/4801-weather-partly-shower.json",
+  "09n": "assets/animated_icons/4797-weather-rainynight.json",
+  "10d": "assets/animated_icons/4801-weather-partly-shower.json",
+  "10n": "assets/animated_icons/4797-weather-rainynight.json",
+  "11d": "assets/animated_icons/4803-weather-storm.json",
+  "11n": "assets/animated_icons/4803-weather-storm.json",
+  "13d": "assets/animated_icons/4802-weather-snow-sunny.json",
+  "13n": "assets/animated_icons/4798-weather-snownight.json",
+  "50d": "assets/animated_icons/4795-weather-mist.json",
+  "50n": "assets/animated_icons/4795-weather-mist.json",
+};
+
+String getWeatherLottie(Weather? code) {
+  return weatherLottie[code?.weatherIcon ?? "01d"] ??
+      "assets/animated_icons/4804-weather-sunny.json";
+}
+
 String? getWeatherImage(String weatherCode) {
   return weatherImages[weatherCode];
 }
