@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pogoda_test/weather_provider.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:weather/weather.dart';
 
 import 'icon_map.dart';
 
@@ -22,10 +23,7 @@ class BigDark extends StatelessWidget {
                     i < Provider.of<WeatherProvider>(context).forecast!.length;
                     i++)
                   miniCard(
-                      Provider.of<WeatherProvider>(context)
-                          .forecast![i]
-                          .temperature!
-                          .celsius!,
+                      Provider.of<WeatherProvider>(context).forecast![i],
                       Provider.of<WeatherProvider>(context).forecast![i].date!,
                       Provider.of<WeatherProvider>(context)
                           .forecast![i]
@@ -37,7 +35,7 @@ class BigDark extends StatelessWidget {
   }
 }
 
-Widget miniCard(double temp, DateTime date, String icon) {
+Widget miniCard(Weather data, DateTime date, String icon) {
   var tempOwnFontSize = 80;
   var svg = getWeatherImage(icon) ?? "assets/svgs/sun-solid.svg";
   return Padding(
@@ -56,20 +54,106 @@ Widget miniCard(double temp, DateTime date, String icon) {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Column(
               children: [
-                Text(temp.toStringAsFixed(2),
-                    style: TextStyle(
-                        fontSize: tempOwnFontSize * 0.32,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white)),
-                Text("°",
-                    style: TextStyle(
-                        fontSize: tempOwnFontSize * 0.18,
-                        fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(172, 255, 255, 255))),
+                Container(
+                  decoration: const BoxDecoration(
+                      border:
+                          Border(bottom: BorderSide(color: Colors.white54))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(data.tempMax!.celsius!.toStringAsFixed(2),
+                          style: TextStyle(
+                              fontSize: tempOwnFontSize * 0.32,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)),
+                      Text("°",
+                          style: TextStyle(
+                              fontSize: tempOwnFontSize * 0.18,
+                              fontWeight: FontWeight.bold,
+                              color: const Color.fromARGB(172, 255, 255, 255))),
+                    ],
+                  ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(data.tempMin!.celsius!.toStringAsFixed(2),
+                        style: TextStyle(
+                            fontSize: tempOwnFontSize * 0.32,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 214, 214, 214))),
+                    Text("°",
+                        style: TextStyle(
+                            fontSize: tempOwnFontSize * 0.18,
+                            fontWeight: FontWeight.bold,
+                            color: const Color.fromARGB(172, 255, 255, 255))),
+                  ],
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 2),
+                      child: Icon(
+                        Icons.air,
+                        color: Colors.white,
+                        size: tempOwnFontSize * 0.18,
+                      ),
+                    ),
+                    Text(
+                      "${data.windSpeed!.toStringAsFixed(2)}m/s",
+                      style: TextStyle(
+                          fontSize: tempOwnFontSize * 0.18,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(172, 255, 255, 255)),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 2),
+                      child: Icon(
+                        Icons.water_drop_outlined,
+                        color: Colors.white,
+                        size: tempOwnFontSize * 0.18,
+                      ),
+                    ),
+                    Text(
+                      "${data.humidity!.toStringAsFixed(2)}%",
+                      style: TextStyle(
+                          fontSize: tempOwnFontSize * 0.18,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(172, 255, 255, 255)),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 2),
+                      child: Icon(
+                        Icons.compress,
+                        color: Colors.white,
+                        size: tempOwnFontSize * 0.18,
+                      ),
+                    ),
+                    Text(
+                      "${data.pressure!.toStringAsFixed(0)}hPa",
+                      style: TextStyle(
+                          fontSize: tempOwnFontSize * 0.18,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(172, 255, 255, 255)),
+                    ),
+                  ],
+                ),
               ],
             ),
             SvgPicture.asset(
@@ -82,14 +166,11 @@ Widget miniCard(double temp, DateTime date, String icon) {
             //   color: const Color.fromARGB(230, 252, 229, 112),
             //   size: tempOwnFontSize * 0.6,
             // ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 9, 0, 0),
-              child: Text(
-                  "${date.hour < 10 ? '0${date.hour}' : date.hour}:${date.minute < 10 ? '0${date.minute}' : date.minute}",
-                  style: TextStyle(
-                      fontSize: tempOwnFontSize * 0.2,
-                      color: Colors.white.withAlpha(120))),
-            ),
+            Text(
+                "${date.hour < 10 ? '0${date.hour}' : date.hour}:${date.minute < 10 ? '0${date.minute}' : date.minute}",
+                style: TextStyle(
+                    fontSize: tempOwnFontSize * 0.2,
+                    color: Colors.white.withAlpha(120))),
           ],
         ),
       ),
