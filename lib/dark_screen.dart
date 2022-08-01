@@ -11,9 +11,6 @@ class Dark extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
         duration: const Duration(milliseconds: 300),
-        // transition zoom in/out with opacity
-        // transitionBuilder: (child, animation) =>
-        //     ScaleTransition(scale: animation, child: child),
         child: Provider.of<MyProvider>(context).getVisibility < 0.29
             ? const Small()
             : const BigDark());
