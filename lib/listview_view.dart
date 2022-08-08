@@ -76,7 +76,7 @@ class _BlueState extends State<Blue> {
                     // if (info.visibleFraction == 0.3) {
 
                     // }
-                    print(info.visibleFraction);
+                    // print(info.visibleFraction);
                     Provider.of<MyProvider>(context, listen: false)
                         .setVisibility(info.visibleFraction);
                   },
